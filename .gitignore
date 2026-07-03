@@ -35,3 +35,8 @@ docker-compose.override.yml
 # --- [Hệ điều hành] ---
 .DS_Store
 Thumbs.db
+
+# --- [Local-only Scripts & Planning Documents] ---
+/init-new-project.js
+/ECOMMERCE_IMPLEMENTATION_PLAN.md
+
