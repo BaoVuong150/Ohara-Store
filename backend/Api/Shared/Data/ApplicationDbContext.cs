@@ -27,11 +27,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims", "users");
         builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens", "users");
 
-        // 2. Định cấu hình đưa các bảng của Module Products vào schema "products" riêng biệt
-        builder.Entity<Category>().ToTable("Categories", "products");
-        builder.Entity<Product>().ToTable("Products", "products");
-        builder.Entity<ProductVariant>().ToTable("ProductVariants", "products");
-        builder.Entity<ProductImage>().ToTable("ProductImages", "products");
+        // 2. Tự động áp dụng tất cả các Fluent API configurations trong Assembly
+        builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }
 

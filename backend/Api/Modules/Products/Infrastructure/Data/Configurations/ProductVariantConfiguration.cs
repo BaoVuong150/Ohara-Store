@@ -1,0 +1,33 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Ohara.Modules.Products.Domain.Entities;
+
+namespace Ohara.Modules.Products.Infrastructure.Data.Configurations;
+
+public class ProductVariantConfiguration : IEntityTypeConfiguration<ProductVariant>
+{
+    public void Configure(EntityTypeBuilder<ProductVariant> builder)
+    {
+        builder.ToTable("ProductVariants", "products");
+        builder.HasKey(pv => pv.Id);
+
+        builder.Property(pv => pv.ProductId)
+            .IsRequired();
+
+        builder.Property(pv => pv.SKU)
+            .IsRequired()
+            .HasMaxLength(50);
+
+        builder.Property(pv => pv.Color)
+            .HasMaxLength(50);
+
+        builder.Property(pv => pv.Size)
+            .HasMaxLength(50);
+
+        builder.Property(pv => pv.Price)
+            .HasColumnType("decimal(18,2)");
+
+        builder.Property(pv => pv.OriginalPrice)
+            .HasColumnType("decimal(18,2)");
+    }
+}
