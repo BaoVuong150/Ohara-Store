@@ -15,6 +15,10 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired()
             .HasMaxLength(200);
 
+        builder.Property(p => p.Slug)
+            .IsRequired()
+            .HasMaxLength(250);
+
         builder.Property(p => p.Description)
             .HasMaxLength(1000);
 
@@ -23,5 +27,14 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(p => p.CategoryId)
             .IsRequired();
+
+        // Ràng buộc duy nhất cho Product Slug
+        builder.HasIndex(p => p.Slug).IsUnique();
+
+        // Ràng buộc khóa ngoại với bảng Categories
+        builder.HasOne<Category>()
+            .WithMany()
+            .HasForeignKey(p => p.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

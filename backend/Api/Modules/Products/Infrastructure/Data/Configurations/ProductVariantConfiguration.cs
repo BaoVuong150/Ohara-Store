@@ -29,5 +29,14 @@ public class ProductVariantConfiguration : IEntityTypeConfiguration<ProductVaria
 
         builder.Property(pv => pv.OriginalPrice)
             .HasColumnType("decimal(18,2)");
+
+        // Ràng buộc duy nhất cho SKU
+        builder.HasIndex(pv => pv.SKU).IsUnique();
+
+        // Ràng buộc khóa ngoại với bảng Products (Xóa dây chuyền)
+        builder.HasOne<Product>()
+            .WithMany()
+            .HasForeignKey(pv => pv.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

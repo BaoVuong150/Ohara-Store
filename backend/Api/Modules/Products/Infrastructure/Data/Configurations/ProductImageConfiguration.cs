@@ -17,5 +17,17 @@ public class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
         builder.Property(pi => pi.ImageUrl)
             .IsRequired()
             .HasMaxLength(500);
+
+        // Ràng buộc khóa ngoại với bảng Products (Xóa dây chuyền)
+        builder.HasOne<Product>()
+            .WithMany()
+            .HasForeignKey(pi => pi.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Ràng buộc khóa ngoại với bảng ProductVariants (Xóa dây chuyền nếu xóa phiên bản)
+        builder.HasOne<ProductVariant>()
+            .WithMany()
+            .HasForeignKey(pi => pi.ProductVariantId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
