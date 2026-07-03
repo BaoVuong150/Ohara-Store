@@ -19,6 +19,16 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .IsRequired()
             .HasMaxLength(150);
 
+        builder.Property(c => c.ParentCategoryId)
+            .IsRequired(false);
+
+        // Chỉ mục duy nhất cho Slug
         builder.HasIndex(c => c.Slug).IsUnique();
+
+        // Khóa ngoại tự liên kết (Self-referencing relationship)
+        builder.HasOne<Category>()
+            .WithMany()
+            .HasForeignKey(c => c.ParentCategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

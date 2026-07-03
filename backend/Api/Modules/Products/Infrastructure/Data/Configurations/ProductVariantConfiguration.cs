@@ -8,7 +8,12 @@ public class ProductVariantConfiguration : IEntityTypeConfiguration<ProductVaria
 {
     public void Configure(EntityTypeBuilder<ProductVariant> builder)
     {
-        builder.ToTable("ProductVariants", "products");
+        builder.ToTable("ProductVariants", "products", t =>
+        {
+            t.HasCheckConstraint("CK_ProductVariant_Price_NonNegative", "\"Price\" >= 0");
+            t.HasCheckConstraint("CK_ProductVariant_OriginalPrice_NonNegative", "\"OriginalPrice\" >= 0");
+            t.HasCheckConstraint("CK_ProductVariant_StockQuantity_NonNegative", "\"StockQuantity\" >= 0");
+        });
         builder.HasKey(pv => pv.Id);
 
         builder.Property(pv => pv.ProductId)
