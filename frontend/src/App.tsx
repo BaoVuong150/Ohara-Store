@@ -45,21 +45,11 @@ const MainApp = () => {
     return (
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
           minHeight: '100vh',
           width: '100vw',
-          backgroundColor: '#f8fafc',
-          gap: '16px',
+          backgroundColor: '#ffffff',
         }}
-      >
-        <Spin size="large" />
-        <span style={{ color: '#64748b', fontSize: '14px', fontWeight: '500' }}>
-          Đang khôi phục phiên đăng nhập...
-        </span>
-      </div>
+      />
     );
   }
 
