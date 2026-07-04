@@ -3,7 +3,7 @@ import type { InternalAxiosRequestConfig } from 'axios';
 import { useAuthStore } from './useAuthStore';
 import type { TokenDto } from './types';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:5000';
 
 export const axiosClient = axios.create({
   baseURL: API_URL,

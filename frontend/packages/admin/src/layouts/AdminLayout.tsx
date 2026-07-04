@@ -1,4 +1,5 @@
 import { Layout, Menu, Space, Avatar, Button, Dropdown } from 'antd';
+import type { MenuProps } from 'antd';
 import { 
   DashboardOutlined, 
   FolderOutlined, 
@@ -28,7 +29,7 @@ export const AdminLayout = () => {
     navigate('/login');
   };
 
-  const userMenuItems = [
+  const userMenuItems: MenuProps['items'] = [
     {
       key: 'storefront',
       icon: <ShoppingOutlined />,
@@ -47,7 +48,7 @@ export const AdminLayout = () => {
     },
   ];
 
-  const menuItems = [
+  const menuItems: MenuProps['items'] = [
     {
       key: '/admin',
       icon: <DashboardOutlined />,

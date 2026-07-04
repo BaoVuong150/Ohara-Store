@@ -1,5 +1,6 @@
 import { Layout, Input, Badge, Button, Space, Avatar, Dropdown } from 'antd';
-import { ShoppingCartOutlined, SearchOutlined, LoginOutlined, LogoutOutlined, UserOutlined, SettingOutlined, DashboardOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { ShoppingCartOutlined, SearchOutlined, LoginOutlined, LogoutOutlined, UserOutlined, DashboardOutlined } from '@ant-design/icons';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from 'shared';
 import { useLogout } from '../features/auth/hooks/useLogout';
@@ -10,7 +11,7 @@ export const StorefrontLayout = () => {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const { handleLogout, isLoading } = useLogout();
+  const { handleLogout } = useLogout();
 
   const handleAuthAction = () => {
     if (isAuthenticated) {
@@ -20,7 +21,7 @@ export const StorefrontLayout = () => {
     }
   };
 
-  const userMenuItems = [
+  const userMenuItems: MenuProps['items'] = [
     {
       key: 'profile',
       icon: <UserOutlined />,

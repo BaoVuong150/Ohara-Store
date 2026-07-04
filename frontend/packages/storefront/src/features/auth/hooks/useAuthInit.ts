@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
   import axios from 'axios';
-  import { useAuthStore, TokenDto } from 'shared';
+  import { useAuthStore } from 'shared';
+  import type { TokenDto } from 'shared';
   import { getProfileApi } from '../services/authService';
 
 

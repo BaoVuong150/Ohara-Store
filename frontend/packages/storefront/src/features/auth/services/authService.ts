@@ -1,5 +1,5 @@
 import { axiosClient } from 'shared';
-import type { LoginDto, RegisterDto, UserDto } from 'shared';
+import type { LoginDto, RegisterDto, TokenDto, UserDto } from 'shared';
 
 
 /**

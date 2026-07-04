@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ConfigProvider, Spin, theme, App as AntdApp } from 'antd';
+import { ConfigProvider, theme, App as AntdApp } from 'antd';
 import { useAuthInit } from './hooks/useAuthInit';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AdminLayout } from './layouts/AdminLayout';

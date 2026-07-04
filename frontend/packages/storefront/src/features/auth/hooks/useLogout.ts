@@ -25,7 +25,7 @@ export const useLogout = () => {
       message.success('Đăng xuất thành công!');
       navigate('/');
     },
-    onError: (error: any) => {
+    onError: () => {
       // Nếu API lỗi (ví dụ token hết hạn trước khi đăng xuất), vẫn xóa state local để giải phóng phiên làm việc
       setToken(null);
       setUser(null);

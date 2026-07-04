@@ -3,7 +3,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { App } from 'antd';
 import { loginApi, getProfileApi } from '../services/authService';
-import { useAuthStore, LoginDto } from 'shared';
+import { useAuthStore } from 'shared';
+import type { LoginDto } from 'shared';
 
 
 export const useLoginForm = () => {
