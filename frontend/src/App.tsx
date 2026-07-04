@@ -3,16 +3,11 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthLayout } from './layouts/AuthLayout';
 import { StorefrontLayout } from './layouts/StorefrontLayout';
-import { AdminLayout } from './layouts/AdminLayout';
 import { ConfigProvider, Spin, theme, App as AntdApp } from 'antd';
 const LoginPage = lazy(() => import('./features/auth/pages/LoginPage'));
 const RegisterPage = lazy(() => import('./features/auth/pages/RegisterPage'));
-const HomePage = lazy(() => import('./features/products/pages/HomePage'));
+import HomePage from './features/products/pages/HomePage';
 
-// Lazy load các trang quản trị Admin CMS
-const AdminDashboard = lazy(() => import('./features/products/pages/admin/AdminDashboard'));
-const CategoryManagementPage = lazy(() => import('./features/products/pages/admin/CategoryManagementPage'));
-const ProductManagementPage = lazy(() => import('./features/products/pages/admin/ProductManagementPage'));
 
 import { useAuthInit } from './features/auth/hooks/useAuthInit';
 
@@ -81,13 +76,6 @@ const MainApp = () => {
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-          </Route>
-
-          {/* 🔐 Admin CMS Routes (Khu vực quản trị) */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="categories" element={<CategoryManagementPage />} />
-            <Route path="products" element={<ProductManagementPage />} />
           </Route>
 
           {/* Điều hướng các url không khớp về trang chủ */}
