@@ -1,5 +1,5 @@
-import { Layout, Input, Badge, Button, Space, Avatar } from 'antd';
-import { ShoppingCartOutlined, SearchOutlined, LoginOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { Layout, Input, Badge, Button, Space, Avatar, Dropdown } from 'antd';
+import { ShoppingCartOutlined, SearchOutlined, LoginOutlined, LogoutOutlined, UserOutlined, SettingOutlined, DashboardOutlined } from '@ant-design/icons';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../features/auth/store/useAuthStore';
 import { useLogout } from '../features/auth/hooks/useLogout';
@@ -20,15 +20,43 @@ export const StorefrontLayout = () => {
     }
   };
 
+  const userMenuItems = [
+    {
+      key: 'profile',
+      icon: <UserOutlined />,
+      label: 'Thông tin tài khoản',
+    },
+    // Hiện tại cho phép tất cả các tài khoản truy cập Admin để test, sau này sẽ phân quyền
+    {
+      key: 'admin',
+      icon: <DashboardOutlined />,
+      label: 'Quản trị Admin CMS',
+      onClick: () => navigate('/admin'),
+    },
+    {
+      type: 'divider',
+    },
+    {
+      key: 'logout',
+      icon: <LogoutOutlined />,
+      label: 'Đăng xuất',
+      danger: true,
+      onClick: handleAuthAction,
+    },
+  ];
+
   return (
     <Layout style={{ minHeight: '100vh', background: 'transparent' }}>
       <Header
-        className="sticky top-0 z-[100] w-full flex items-center justify-between bg-white/75 backdrop-blur-md border-b border-slate-900/8 px-6 h-[72px]"
+        className="sticky top-0 z-[100] w-full flex items-center justify-between bg-white/70 backdrop-blur-md border-b border-slate-200 px-6 h-[72px]"
       >
         {/* Logo */}
-        <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
-          <span className="text-[22px] font-extrabold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent tracking-[0.5px]">
-            OMNISHOP
+        <div className="flex items-center cursor-pointer gap-2" onClick={() => navigate('/')}>
+          <span className="text-[24px] font-black bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] bg-clip-text text-transparent tracking-[1px] uppercase">
+            OHARA
+          </span>
+          <span className="text-[10px] font-bold bg-slate-900 text-white px-2 py-0.5 rounded-[4px] tracking-[0.5px]">
+            STORE
           </span>
         </div>
 
@@ -38,13 +66,13 @@ export const StorefrontLayout = () => {
             prefix={<SearchOutlined style={{ color: 'rgba(15, 23, 42, 0.45)' }} />}
             placeholder="Tìm kiếm sản phẩm..."
             variant="filled"
-            className="bg-slate-900/4 border border-slate-900/8 text-slate-900 rounded-[20px] h-[38px]"
+            className="bg-slate-100 hover:bg-slate-200/70 focus:bg-white border-0 text-slate-950 rounded-[20px] h-[40px] transition-all"
           />
         </div>
 
         {/* User Action Controls */}
         <Space size="large">
-          <Badge count={2} size="small" offset={[2, 0]} color="var(--primary-color)">
+          <Badge count={0} size="small" offset={[2, 0]} color="#4f46e5" showZero={false}>
             <Button
               type="text"
               icon={<ShoppingCartOutlined style={{ fontSize: '22px', color: '#0f172a' }} />}
@@ -53,48 +81,42 @@ export const StorefrontLayout = () => {
           </Badge>
 
           {isAuthenticated ? (
-            <Space size="middle">
-              <Space size="small">
-                <Avatar icon={<UserOutlined />} src={user?.avatarUrl} style={{ backgroundColor: 'var(--primary-color)' }} />
+            <Dropdown menu={{ items: userMenuItems }} trigger={['click']} placement="bottomRight">
+              <Space className="cursor-pointer hover:opacity-80 transition-opacity" size="small">
+                <Avatar 
+                  icon={<UserOutlined />} 
+                  src={user?.avatarUrl} 
+                  style={{ backgroundColor: '#4f46e5' }} 
+                />
                 <span
                   style={{
                     color: '#0f172a',
-                    fontWeight: 500,
-                    display: 'inline-block',
+                    fontWeight: 600,
                     maxWidth: '120px',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  {user?.firstName}
+                  {user?.firstName || 'Tài khoản'}
                 </span>
               </Space>
-              <Button
-                type="text"
-                danger
-                icon={<LogoutOutlined />}
-                onClick={handleAuthAction}
-                loading={isLoading}
-                style={{ display: 'flex', alignItems: 'center' }}
-              >
-                Đăng xuất
-              </Button>
-            </Space>
+            </Dropdown>
           ) : (
             <Button
               type="primary"
               icon={<LoginOutlined />}
               onClick={handleAuthAction}
               style={{
-                background: 'linear-gradient(to right, #4f46e5, #4338ca)',
+                background: 'linear-gradient(to right, #4f46e5, #7c3aed)',
                 border: 'none',
                 borderRadius: '20px',
-                height: '38px',
+                height: '40px',
                 fontWeight: 600,
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px',
+                boxShadow: '0 4px 12px rgba(79, 70, 229, 0.25)',
               }}
             >
               Đăng nhập
@@ -112,15 +134,17 @@ export const StorefrontLayout = () => {
       <Footer
         style={{
           textAlign: 'center',
-          background: 'rgba(241, 245, 249, 0.8)',
+          background: 'rgba(255, 255, 255, 0.4)',
+          backdropFilter: 'blur(8px)',
           borderTop: '1px solid rgba(15, 23, 42, 0.08)',
           color: 'var(--text-secondary)',
           padding: '24px 0',
           fontSize: '14px',
         }}
       >
-        ©{new Date().getFullYear()} OmniShop. Cửa hàng thương mại điện tử đa kênh hiện đại.
+        © {new Date().getFullYear()} <strong>OHARA Store</strong>. Cửa hàng thương mại điện tử đa kênh hiện đại.
       </Footer>
     </Layout>
   );
 };
+
